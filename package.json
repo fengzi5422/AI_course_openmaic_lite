@@ -1,0 +1,36 @@
+{
+  "name": "openmaic-lite",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "latest",
+    "ai": "latest",
+    "mammoth": "^1.12.2",
+    "next": "latest",
+    "pg": "latest",
+    "pptxgenjs": "^4.0.1",
+    "puppeteer-core": "^25.9.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "unpdf": "^1.8.1",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/pg": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

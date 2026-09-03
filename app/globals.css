@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* ---- 纸墨视觉系统：亮/暗双模，衬线标题 + hairline + 编号体系 ---- */
+:root {
+  --bg: #131109;
+  --bg-soft: #1c1912;
+  --panel: #1c1912;
+  --panel-solid: #1c1912;
+  --panel-2: #25211a;
+  --border: rgba(234, 228, 214, 0.14);
+  --border-strong: rgba(234, 228, 214, 0.28);
+  --text: #eae4d6;
+  --text-dim: #8f887a;
+  --accent: #c9a227;
+  --accent-soft: rgba(201, 162, 39, 0.12);
+  --ink: #eae4d6;
+  --paper: #131109;
+  --card-shadow: none;
+  --font-display: "Songti SC", "STSong", "Noto Serif SC", "SimSun", Georgia, serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.light {
+  --bg: #f7f5f0;
+  --bg-soft: #efece4;
+  --panel: #fffefb;
+  --panel-solid: #fffefb;
+  --panel-2: #f1eee6;
+  --border: rgba(26, 23, 18, 0.14);
+  --border-strong: rgba(26, 23, 18, 0.32);
+  --text: #1a1712;
+  --text-dim: #7d766a;
+  --accent: #b3311e;
+  --accent-soft: rgba(179, 49, 30, 0.08);
+  --ink: #1a1712;
+  --paper: #f7f5f0;
+  --card-shadow: none;
+}
+
+body {
+  @apply antialiased;
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ---- 通用语义类 ---- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  transition: opacity 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.82;
+}
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--panel-2);
+}
+.btn-ghost:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* 编辑式链接操作 */
+.link-op {
+  color: var(--text-dim);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.link-op:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* 衬线标题 */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* 小节编号（编辑式） */
+.sec-num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+/* hairline 水平线 */
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* 输入框：底边线式 */
+.input-line {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s var(--ease-out);
+}
+.input-line:focus {
+  border-bottom-color: var(--accent);
+}
+.input-box {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s var(--ease-out);
+}
+.input-box:focus {
+  border-color: var(--border-strong);
+}
+
+/* ---- 动画：克制、无回弹 ---- */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.anim-fade-in { animation: fade-in 0.4s var(--ease-out) both; }
+.anim-fade-up { animation: fade-up 0.5s var(--ease-out) both; }
+.anim-pop-in { animation: fade-up 0.45s var(--ease-out) both; } /* 兼容旧类名，动效改为上移淡入 */
+.skeleton {
+  background: linear-gradient(90deg, var(--panel-2) 25%, var(--bg-soft) 50%, var(--panel-2) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+.typing-dot { animation: typing-dot 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+/* 字幕打字光标 */
+.caption-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: currentColor;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: fade-in 0.6s ease infinite alternate;
+}
+
+/* 场景切换过渡 */
+.scene-enter { animation: fade-in 0.4s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-in, .anim-fade-up, .anim-pop-in, .scene-enter, .skeleton {
+    animation: none;
+  }
+}
