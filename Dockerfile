@@ -1,10 +1,12 @@
 # ---------- 依赖层 ----------
 FROM node:20-slim AS deps
 WORKDIR /app
+# 国内服务器加速：npmmirror 源（corepack 与 pnpm 共用）
+ENV COREPACK_NPM_REGISTRY=https://registry.npmmirror.com
 # 固定 pnpm 版本（lockfile v9 需要 pnpm 10；corepack 默认拉最新版会因 Node 版本不匹配失败）
 RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --registry=https://registry.npmmirror.com
 
 # ---------- 构建层 ----------
 FROM node:20-slim AS builder
