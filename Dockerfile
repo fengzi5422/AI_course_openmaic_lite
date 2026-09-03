@@ -1,14 +1,15 @@
 # ---------- 依赖层 ----------
 FROM node:20-slim AS deps
 WORKDIR /app
-RUN corepack enable
+# 固定 pnpm 版本（lockfile v9 需要 pnpm 10；corepack 默认拉最新版会因 Node 版本不匹配失败）
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # ---------- 构建层 ----------
 FROM node:20-slim AS builder
 WORKDIR /app
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
