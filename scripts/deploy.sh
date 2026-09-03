@@ -30,7 +30,8 @@ EOF
 fi
 
 echo "==> [3/4] 构建并启动（首次约 3-5 分钟）"
-docker compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml pull app || echo "⚠️ 预构建镜像拉取失败，将回退为本地构建（2G 内存机器不推荐）"
+docker compose -f docker-compose.prod.yml up -d
 
 echo "==> [4/4] 健康检查"
 for i in $(seq 1 30); do

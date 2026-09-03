@@ -21,6 +21,9 @@ services:
           memory: 384M
 
   app:
+    # 2核2G 服务器不本地构建：优先拉 GitHub Actions 预构建镜像
+    # 仅当需要自定义且内存充裕时才用 --build 本地构建
+    image: ghcr.io/fengzi5422/ai_course_openmaic_lite:latest
     build: .
     restart: unless-stopped
     depends_on:
