@@ -3,7 +3,7 @@
 # 前置：已安装 Docker 与 Docker Compose 插件（见 docs/DEPLOY.md 第 2 步）
 set -euo pipefail
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 echo "==> [1/4] 配置 2G swap（2C2G 必备，防构建/导出 OOM）"
 if ! swapon --show | grep -q /swapfile; then
